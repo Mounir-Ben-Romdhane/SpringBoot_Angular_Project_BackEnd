@@ -28,7 +28,7 @@ public class SpringDocConfig {
         return contact;
     }
 
-    /*
+
     @Bean
     public GroupedOpenApi productPublicApi() {
         return GroupedOpenApi.builder()
@@ -36,5 +36,5 @@ public class SpringDocConfig {
                 .pathsToMatch("/chamber/**")
                 .pathsToExclude("**")
                 .build();
-    }*/
+    }
 }
