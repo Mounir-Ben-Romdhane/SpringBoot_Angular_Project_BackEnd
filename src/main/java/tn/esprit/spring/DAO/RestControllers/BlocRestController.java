@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("bloc")
 public class BlocRestController {
-
+//test emna
     @Autowired
     IBlocService iBlocService;
 
