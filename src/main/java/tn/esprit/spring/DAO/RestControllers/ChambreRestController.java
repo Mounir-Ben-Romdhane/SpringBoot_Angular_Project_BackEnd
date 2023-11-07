@@ -16,6 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("chambre")
 public class ChambreRestController {
+
+    //test-fares
     @Autowired
     IChambreService iChambreService;
 
