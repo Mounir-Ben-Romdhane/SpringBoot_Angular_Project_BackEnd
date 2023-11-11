@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -27,5 +28,5 @@ public class Bloc {
     Foyer foyer;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bloc")
-    private Set<Chambre> chambres;
+    private Set<Chambre> chambres = new HashSet<>();
 }

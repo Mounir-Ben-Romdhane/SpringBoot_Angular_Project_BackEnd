@@ -44,8 +44,9 @@ public class BlocRestController {
     Bloc findById(@PathVariable("id") Long id){
         return iBlocService.findById(id);
     }
+
     @GetMapping("findByNameBloc")
-    List<Bloc> findByNomBloc(@RequestParam String name){
+    Bloc findByNomBloc(@RequestParam String name){
         return blocRepository.findByNomBloc(name);
     }
 
@@ -54,6 +55,17 @@ public class BlocRestController {
         return blocRepository.findByNomBlocAndCapaciteBloc(name,capacite);
     }
 
+    @PutMapping("affectuerChambresABloc/{nomBloc}")
+    Bloc affecterChambresABloc(@PathVariable("nomBloc") String nomBloc,
+                               @RequestBody List<Long> numChambres){
+        return iBlocService.affecterChambresABloc(numChambres,nomBloc);
+    }
+
+    @PutMapping("affecterBlocAFoyer/{nomBloc}/{nomFoyer}")
+    Bloc affecterBlocAFoyer(@PathVariable("nomBloc") String nomBloc,
+                            @PathVariable("nomFoyer") String nomFoyer){
+        return iBlocService.affecterBlocAFoyer(nomBloc,nomFoyer);
+    }
 
 
 }

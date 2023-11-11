@@ -1,11 +1,13 @@
 package tn.esprit.spring.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,5 +27,8 @@ public class Reservation {
     private boolean estValide;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Etudiant> etudiants;
+    @JsonIgnore
+    private Set<Etudiant> etudiants = new HashSet<>();
+
+
 }

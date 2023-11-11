@@ -14,4 +14,6 @@ public interface IReservationService {
     Reservation findById(String id);
     void deleteById(String id);
     void delete(Reservation r);
+    Reservation ajouterReservationEtAssignerAChambreEtAEtudiant(Long numChambre, Long cin) ;
 }
+
