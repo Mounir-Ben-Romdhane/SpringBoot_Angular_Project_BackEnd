@@ -15,3 +15,4 @@ public interface IChambreService {
     void deleteById(long id);
     void delete(Chambre b);
 }
+

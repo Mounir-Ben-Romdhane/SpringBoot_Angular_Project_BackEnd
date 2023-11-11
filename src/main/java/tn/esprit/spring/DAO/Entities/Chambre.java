@@ -1,9 +1,11 @@
 package tn.esprit.spring.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,8 +26,10 @@ public class Chambre {
     private TypeChambre typeChambre;
 
     @ManyToOne
+    @JsonIgnore
     Bloc bloc;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<Reservation> reservations;
+    @JsonIgnore
+    private Set<Reservation> reservations = new HashSet<>();
 }

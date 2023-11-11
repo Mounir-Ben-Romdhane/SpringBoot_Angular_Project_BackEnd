@@ -13,6 +13,8 @@ import java.util.List;
 public class UniversiteService implements IUniversiteService{
     @Autowired
     private UniversiteRepository universiteRepository;
+    @Autowired
+    private FoyerRepository foyerRepository;
 
     @Override
     public Universite addUniversite(Universite u) {
@@ -55,5 +57,24 @@ public class UniversiteService implements IUniversiteService{
     @Override
     public void delete(Universite e) {
         universiteRepository.delete(e);
+    }
+
+    @Override
+    public Universite affecterFoyerAUniversite(long idFoyer, String nomUniversite) {
+        Foyer foyer = foyerRepository.findById(idFoyer).get();
+        Universite universite = universiteRepository.findByNomUniversite(nomUniversite);
+
+        universite.setFoyer(foyer);
+        universiteRepository.save(universite);
+
+        return universite;
+    }
+
+    @Override
+    public Universite desaffecterFoyerAUniversite(long idUniversite) {
+        Universite universite = universiteRepository.findById(idUniversite).get();
+        universite.setFoyer(null);
+        universiteRepository.save(universite);
+        return universite;
     }
 }

@@ -2,16 +2,26 @@ package tn.esprit.spring.DAO.Services.Reservation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.spring.DAO.Entities.Chambre;
+import tn.esprit.spring.DAO.Entities.Etudiant;
 import tn.esprit.spring.DAO.Entities.Reservation;
+import tn.esprit.spring.DAO.Repositories.ChambreRepository;
+import tn.esprit.spring.DAO.Repositories.EtudiantRepository;
 import tn.esprit.spring.DAO.Repositories.FoyerRepository;
 import tn.esprit.spring.DAO.Repositories.ReservationRepository;
 
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 
 @Service
 public class ReservationService implements IReservationService{
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private ChambreRepository chambreRepository;
+    @Autowired
+    private EtudiantRepository etudiantRepository;
 
     @Override
     public Reservation addReservation(Reservation r) {
@@ -55,5 +65,31 @@ public class ReservationService implements IReservationService{
     @Override
     public void delete(Reservation e) {
         reservationRepository.delete(e);
+    }
+
+    @Override
+    public Reservation ajouterReservationEtAssignerAChambreEtAEtudiant(Long numChambre, Long cin) {
+        //Recuperation des entity
+        Chambre chambre = chambreRepository.findByNumeroChambre(numChambre);
+        Etudiant etudiant = etudiantRepository.findByCin(cin);
+
+
+        String idRes = Year.now().getValue()+"/"+(Year.now().getValue()+1) + "-"+chambre.getBloc().getNomBloc()+"-"
+                +numChambre+"-"+cin;
+        Reservation reservation = new Reservation();
+        reservation.setIdReservation(idRes);
+        reservation.setEstValide(true);
+        reservation.setAnneeUniversitaire(LocalDate.now());
+        reservation.getEtudiants().add(etudiant);
+
+
+
+        chambre.getReservations().add(reservation);
+        etudiant.getReservations().add(reservation);
+
+        chambreRepository.save(chambre);
+        etudiantRepository.save(etudiant);
+        reservationRepository.save(reservation);
+        return reservation;
     }
 }

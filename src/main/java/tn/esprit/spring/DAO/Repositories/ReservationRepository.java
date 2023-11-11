@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, String> {
+
+    Reservation findByIdReservation(String id);
     // 1- Recherche des réservations validées
     List<Reservation> findByEstValideTrue();
 
