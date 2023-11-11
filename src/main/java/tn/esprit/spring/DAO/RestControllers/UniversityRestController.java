@@ -41,4 +41,15 @@ public class UniversityRestController {
     Universite findById(@PathVariable("id") Long id){
         return iUniversiteService.findById(id);
     }
+
+    @PutMapping("/{idFoyer}/{nomUniversite}")
+    Universite affecterFoyerAUniversite(@PathVariable("idFoyer") long idFoyer,
+                                        @PathVariable("nomUniversite") String nomUniversite){
+        return  iUniversiteService.affecterFoyerAUniversite(idFoyer,nomUniversite);
+    }
+
+    @PutMapping("/{idUniversite}")
+    Universite desaffecterFoyerAUniversite(@PathVariable("idUniversite") long idUniversite){
+        return  iUniversiteService.desaffecterFoyerAUniversite(idUniversite);
+    }
 }

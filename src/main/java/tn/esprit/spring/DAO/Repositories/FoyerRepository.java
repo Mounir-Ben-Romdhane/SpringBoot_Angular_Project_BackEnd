@@ -8,6 +8,7 @@ import tn.esprit.spring.DAO.Entities.Universite;
 import java.util.List;
 
 public interface FoyerRepository extends JpaRepository<Foyer, Long> {
+    Foyer findByNomFoyer(String nomFoyer);
     // 1- Recherche des foyers d'un bloc spécifique
     //List<Foyer> findByBlocs(Bloc bloc);
 

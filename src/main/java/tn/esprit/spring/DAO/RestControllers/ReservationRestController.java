@@ -1,5 +1,6 @@
 package tn.esprit.spring.DAO.RestControllers;
 
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +40,11 @@ public class ReservationRestController {
     @GetMapping("/{id}")
     Reservation findById(@PathVariable("id") String id){
         return iReservationService.findById(id);
+    }
+
+    @PostMapping("/ajouterReservationEtAssignerAChambreEtAEtudiant/{numChambre}/{cin}")
+    Reservation ajouterReservationEtAssignerAChambreEtAEtudiant(@PathVariable("numChambre") Long numChambre,
+                                                                @PathVariable("cin") Long cin) {
+        return iReservationService.ajouterReservationEtAssignerAChambreEtAEtudiant(numChambre,cin);
     }
 }
