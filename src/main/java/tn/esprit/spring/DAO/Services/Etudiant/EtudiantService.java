@@ -47,7 +47,7 @@ public class EtudiantService implements IEtudiantService{
                 .dateNaissance(registerRequest.getDateNaissance())
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(Role.USER)
+                .role(registerRequest.getRole())
                 .build();
         var savedEtudiant = etudiantRepository.save(etudiant);
         var jwtToken = jwtService.generateToken(etudiant);

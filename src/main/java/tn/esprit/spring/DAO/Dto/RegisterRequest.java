@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tn.esprit.spring.DAO.Entities.Role;
 
 import java.util.Date;
 
@@ -27,5 +28,5 @@ public class RegisterRequest {
 
     private String password;
 
-    private String role;
+    private Role role;
 }
