@@ -1,6 +1,7 @@
 package tn.esprit.spring.DAO.RestControllers;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.DAO.Entities.Bloc;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("bloc")
+@RequiredArgsConstructor
 public class BlocRestController {
 
     @Autowired
