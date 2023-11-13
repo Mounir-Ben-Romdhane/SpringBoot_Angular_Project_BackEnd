@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import tn.esprit.spring.DAO.Dto.RegisterRequest;
-import tn.esprit.spring.DAO.Entities.Role;
 import tn.esprit.spring.DAO.Services.Etudiant.EtudiantService;
 
 import static tn.esprit.spring.DAO.Entities.Role.ADMIN;
@@ -19,6 +18,7 @@ public class SpringBootFirstAppApplication {
         SpringApplication.run(SpringBootFirstAppApplication.class, args);
     }
 
+    /*
     @Bean
     public CommandLineRunner commandLineRunner(
             EtudiantService service
@@ -31,7 +31,7 @@ public class SpringBootFirstAppApplication {
                     .password("password")
                     .role(ADMIN)
                     .build();
-            System.out.println("Admin token: " + service.register(admin).getToken());
+            System.out.println("Admin token: " + service.register(admin).getAccesToken());
 
             var manager = RegisterRequest.builder()
                     .nomEt("Etudiant")
@@ -40,8 +40,9 @@ public class SpringBootFirstAppApplication {
                     .password("password")
                     .role(USER)
                     .build();
-            System.out.println("Etudiant token: " + service.register(manager).getToken());
+            System.out.println("Etudiant token: " + service.register(manager).getAccesToken());
 
         };
     }
+     */
 }

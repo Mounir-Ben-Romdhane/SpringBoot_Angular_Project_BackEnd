@@ -42,6 +42,9 @@ public class Etudiant implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "passwordDecoder")
+    private String passwordDecoder;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;

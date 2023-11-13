@@ -1,5 +1,7 @@
 package tn.esprit.spring.DAO.RestControllers;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import tn.esprit.spring.DAO.Dto.RegisterRequest;
 import tn.esprit.spring.DAO.Entities.Etudiant;
 import tn.esprit.spring.DAO.Services.Etudiant.IEtudiantService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -35,6 +38,14 @@ public class EtudiantRestController {
             @RequestBody AuthenticationRequest authenticationRequest
     ) {
         return ResponseEntity.ok(iEtudiantService.authenticate(authenticationRequest));
+    }
+
+    @PostMapping("/refresh-token")
+    public void refreshToken(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException {
+        iEtudiantService.refreshToken(request, response);
     }
 
 
