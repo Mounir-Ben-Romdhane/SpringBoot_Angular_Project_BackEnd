@@ -1,27 +1,28 @@
 package tn.esprit.spring.DAO.Services.Etudiant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.DAO.Dto.AuthenticationRequest;
 import tn.esprit.spring.DAO.Dto.AuthenticationResponse;
 import tn.esprit.spring.DAO.Dto.RegisterRequest;
+import tn.esprit.spring.DAO.Dto.VerificationRequest;
 import tn.esprit.spring.DAO.Entities.Etudiant;
 import tn.esprit.spring.DAO.Entities.Token;
 import tn.esprit.spring.DAO.Entities.TokenType;
 import tn.esprit.spring.DAO.Repositories.EtudiantRepository;
 import tn.esprit.spring.DAO.Repositories.TokenRepository;
 import tn.esprit.spring.DAO.Services.JWT.JwtService;
+import tn.esprit.spring.DAO.Services.tfa.TwoFactorAuthenticationService;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,6 +44,8 @@ public class EtudiantService implements IEtudiantService{
 
     private final AuthenticationManager authenticationManager;
 
+    private final TwoFactorAuthenticationService tfaService;
+
 
     @Override
     public AuthenticationResponse register(RegisterRequest registerRequest) {
@@ -56,14 +59,22 @@ public class EtudiantService implements IEtudiantService{
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .passwordDecoder(registerRequest.getPassword())
                 .role(registerRequest.getRole())
+                .mFaEnabled(registerRequest.isMFaEnabled())
                 .build();
+
+        // if MFA enabled then generate secret key
+        if (registerRequest.isMFaEnabled()) {
+            etudiant.setSecret(tfaService.generateNewSecret());
+        }
         var savedEtudiant = etudiantRepository.save(etudiant);
         var jwtToken = jwtService.generateToken(etudiant);
         var refreshToken = jwtService.generateRefreshToken(etudiant);
         saveEtudiantToken(savedEtudiant, jwtToken);
         return AuthenticationResponse.builder()
-                .accesToken(jwtToken)
+                .secretImageUri(tfaService.generateQrCodeImageUri(etudiant.getSecret()))
+                .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .mFaEnabled(etudiant.isMFaEnabled())
                 .build();
     }
 
@@ -79,13 +90,21 @@ public class EtudiantService implements IEtudiantService{
         );
         var etudiant = etudiantRepository.findByEmail(authenticationRequest.getEmail())
                 .orElseThrow();
+        if (etudiant.isMFaEnabled()) {
+            return AuthenticationResponse.builder()
+                    .accessToken("")
+                    .refreshToken("")
+                    .mFaEnabled(true)
+                    .build();
+        }
         var jwtToken = jwtService.generateToken(etudiant);
         var refreshToken = jwtService.generateRefreshToken(etudiant);
         revokeAllEtudiantTokens(etudiant);
         saveEtudiantToken(etudiant, jwtToken);
         return AuthenticationResponse.builder()
-                .accesToken(jwtToken)
+                .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .mFaEnabled(false)
                 .build();
     }
 
@@ -94,7 +113,7 @@ public class EtudiantService implements IEtudiantService{
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String authHeader = request.getHeader("Authorization");
         final String refreshToken;
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -110,12 +129,33 @@ public class EtudiantService implements IEtudiantService{
                 revokeAllEtudiantTokens(etudiant);
                 saveEtudiantToken(etudiant, accessToken);
                 var authResponse = AuthenticationResponse.builder()
-                        .accesToken(accessToken)
+                        .accessToken(accessToken)
                         .refreshToken(refreshToken)
+                        .mFaEnabled(false)
                         .build();
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+    @Override
+    public AuthenticationResponse verifyCode(
+            VerificationRequest verificationRequest
+    ) {
+        Etudiant etudiant = etudiantRepository.findByEmail(verificationRequest.getEmail())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("Etudiant with email %s not found", verificationRequest.getEmail())
+                ));
+        if (tfaService.isOtpNotValid(etudiant.getSecret(), verificationRequest.getCode())) {
+            throw new BadCredentialsException("Code is not correct");
+        }
+        var jwtToken = jwtService.generateToken(etudiant);
+        var refreshToken = jwtService.generateRefreshToken(etudiant);
+        return AuthenticationResponse.builder()
+                .accessToken(jwtToken)
+                .mFaEnabled(etudiant.isMFaEnabled())
+                .refreshToken(refreshToken)
+                .build();
     }
 
     private void revokeAllEtudiantTokens(Etudiant etudiant) {

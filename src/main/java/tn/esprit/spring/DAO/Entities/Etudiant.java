@@ -45,6 +45,12 @@ public class Etudiant implements UserDetails {
     @Column(name = "passwordDecoder")
     private String passwordDecoder;
 
+    @Column(name = "mFaEnabled")
+    private boolean mFaEnabled;
+
+    @Column(name = "secret")
+    private String secret;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
@@ -55,6 +61,8 @@ public class Etudiant implements UserDetails {
 
     @OneToMany(mappedBy = "etudiant")
     private List<Token> tokens ;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,6 +1,6 @@
 package tn.esprit.spring.DAO.Dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +10,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class AuthenticationResponse {
 
-    @JsonProperty("access_token")
-    private String accesToken;
 
-    @JsonProperty("refresh_token")
+    private String accessToken;
+
+
     private String refreshToken;
+
+    private boolean mFaEnabled;
+
+    private String secretImageUri;
 
 
 }

@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import tn.esprit.spring.DAO.Dto.AuthenticationRequest;
 import tn.esprit.spring.DAO.Dto.AuthenticationResponse;
 import tn.esprit.spring.DAO.Dto.RegisterRequest;
+import tn.esprit.spring.DAO.Dto.VerificationRequest;
 import tn.esprit.spring.DAO.Entities.Etudiant;
 
 import java.io.IOException;
@@ -26,4 +27,6 @@ public interface IEtudiantService {
     AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest);
 
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
+
+    AuthenticationResponse verifyCode(VerificationRequest verificationRequest);
 }

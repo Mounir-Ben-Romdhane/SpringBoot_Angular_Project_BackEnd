@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.DAO.Dto.AuthenticationResponse;
 import tn.esprit.spring.DAO.Dto.AuthenticationRequest;
 import tn.esprit.spring.DAO.Dto.RegisterRequest;
+import tn.esprit.spring.DAO.Dto.VerificationRequest;
 import tn.esprit.spring.DAO.Entities.Etudiant;
 import tn.esprit.spring.DAO.Services.Etudiant.IEtudiantService;
 
@@ -27,10 +28,14 @@ public class EtudiantRestController {
 
     //Authentification
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
+    public ResponseEntity<?> register(
             @RequestBody RegisterRequest registerRequest
     ) {
-       return ResponseEntity.ok(iEtudiantService.register(registerRequest));
+        var response = iEtudiantService.register(registerRequest);
+        if (registerRequest.isMFaEnabled()) {
+            return ResponseEntity.ok(response);
+        }
+       return ResponseEntity.accepted().build();
     }
 
     @PostMapping("/authenticate")
@@ -46,6 +51,13 @@ public class EtudiantRestController {
         HttpServletResponse response
     ) throws IOException {
         iEtudiantService.refreshToken(request, response);
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<?> verify(
+            @RequestBody VerificationRequest verificationRequest
+    ) {
+        return ResponseEntity.ok(iEtudiantService.verifyCode(verificationRequest));
     }
 
 
