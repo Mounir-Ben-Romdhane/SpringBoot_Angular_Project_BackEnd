@@ -1,7 +1,9 @@
 package tn.esprit.spring.DAO.RestControllers;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.DAO.Entities.Bloc;
 import tn.esprit.spring.DAO.Repositories.BlocRepository;
@@ -12,6 +14,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("bloc")
+@RequiredArgsConstructor
 public class BlocRestController {
 
     @Autowired
@@ -26,16 +29,19 @@ public class BlocRestController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     Bloc addBloc(@RequestBody Bloc b) {
         return iBlocService.addBloc(b);
     }
 
     @PutMapping("update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     Bloc updateBloc(@PathVariable("id") Long id, @RequestBody Bloc b){
         return iBlocService.editBloc(id, b);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     void deleteBloc(@PathVariable("id") Long id){
         iBlocService.deleteById(id);
     }
