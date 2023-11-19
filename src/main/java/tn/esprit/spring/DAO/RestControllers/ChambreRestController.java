@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("chambre")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ChambreRestController {
     @Autowired
     IChambreService iChambreService;
@@ -51,5 +52,7 @@ public class ChambreRestController {
     List<Chambre> selectByNumSQL(long num){
         return chambreRepository.selectByNumSQL(num);
     }
+
+
 
 }

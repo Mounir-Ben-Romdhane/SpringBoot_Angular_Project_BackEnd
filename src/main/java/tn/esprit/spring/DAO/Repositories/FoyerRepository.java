@@ -8,6 +8,8 @@ import tn.esprit.spring.DAO.Entities.Universite;
 import java.util.List;
 
 public interface FoyerRepository extends JpaRepository<Foyer, Long> {
+
+    List<Foyer> findByNomFoyerContainingIgnoreCase(String nomFoyer);
     // 1- Recherche des foyers d'un bloc spécifique
     //List<Foyer> findByBlocs(Bloc bloc);
 
