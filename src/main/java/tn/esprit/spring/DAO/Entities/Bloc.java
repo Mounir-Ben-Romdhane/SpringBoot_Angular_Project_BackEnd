@@ -24,9 +24,10 @@ public class Bloc {
     @Column(name = "capaciteBloc")
     private long capaciteBloc;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL )
     Foyer foyer;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bloc")
+    @OneToMany( mappedBy = "bloc")
     private Set<Chambre> chambres = new HashSet<>();
+
 }

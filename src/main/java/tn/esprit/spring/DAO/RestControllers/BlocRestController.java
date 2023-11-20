@@ -4,13 +4,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.DAO.Entities.Bloc;
+import tn.esprit.spring.DAO.Entities.Foyer;
 import tn.esprit.spring.DAO.Repositories.BlocRepository;
+import tn.esprit.spring.DAO.Repositories.FoyerRepository;
 import tn.esprit.spring.DAO.Services.Bloc.IBlocService;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("bloc")
 public class BlocRestController {
 
@@ -19,6 +22,7 @@ public class BlocRestController {
 
     @Autowired
     BlocRepository blocRepository;
+    FoyerRepository foyerRepository;
 
     @GetMapping("/findAll")
     List<Bloc> findAll(){
@@ -64,6 +68,8 @@ public class BlocRestController {
     @PutMapping("affecterBlocAFoyer/{nomBloc}/{nomFoyer}")
     Bloc affecterBlocAFoyer(@PathVariable("nomBloc") String nomBloc,
                             @PathVariable("nomFoyer") String nomFoyer){
+        Bloc b = blocRepository.getBlocByNomBloc(nomBloc);
+        Foyer f = foyerRepository.findByNomFoyer(nomFoyer);
         return iBlocService.affecterBlocAFoyer(nomBloc,nomFoyer);
     }
 
