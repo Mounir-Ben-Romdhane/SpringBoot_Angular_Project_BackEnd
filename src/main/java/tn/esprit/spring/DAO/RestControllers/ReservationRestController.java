@@ -3,6 +3,7 @@ package tn.esprit.spring.DAO.RestControllers;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ import tn.esprit.spring.DAO.Services.Etudiant.IEtudiantService;
 import tn.esprit.spring.DAO.Services.Reservation.IReservationService;
 import tn.esprit.spring.DAO.Services.Reservation.ReservationService;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -97,6 +100,14 @@ public class ReservationRestController {
         return new ResponseEntity<>(cins, HttpStatus.OK);
     }
 
+
+    @GetMapping("/reservation/getReservationParAnneeUniversitaire")
+    public long getReservationParAnneeUniversitaire(
+            @RequestParam("debutAnnee") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate debutAnnee,
+            @RequestParam("finAnnee") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate finAnnee) {
+
+        return reservationService.getReservationParAnneeUniversitaire(debutAnnee, finAnnee);
+    }
 
 
 }

@@ -145,6 +145,12 @@ public class ReservationService implements IReservationService{
         }
     }
 
+    public long getReservationParAnneeUniversitaire(LocalDate debutAnnee, LocalDate finAnnee) {
+        Date start = java.sql.Date.valueOf(debutAnnee);
+        Date end = java.sql.Date.valueOf(finAnnee);
+        return reservationRepository.countReservationsBetween(start, end);
+    }
+
   /*  @Override
     public Reservation addReservationWithPayment(Reservation reservation, PaymentMethods paymentMethod) {
         reservation.setPaymentMethod(paymentMethod);
