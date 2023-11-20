@@ -230,4 +230,9 @@ public class EtudiantService implements IEtudiantService{
     }
 
 
+    public List<Long> findAllCINs(){
+        return etudiantRepository.findAllCINs();
+    }
+
+
 }
