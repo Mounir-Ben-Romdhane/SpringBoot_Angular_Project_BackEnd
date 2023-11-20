@@ -1,14 +1,24 @@
 package tn.esprit.spring.DAO.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
 import tn.esprit.spring.DAO.Entities.Etudiant;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
+@EnableJpaRepositories
+@Repository
+public interface EtudiantRepository extends JpaRepository<Etudiant, Integer> {
+
+    //Etudiant findByEmail(String email);
+    Optional<Etudiant> findByEmail(String email);
+    Optional<Etudiant> findOneByEmailAndPassword(String email, String password);
     // 1- Recherche par nom et prénom de l'étudiant
     List<Etudiant> findByNomEtAndPrenomEt(String nom, String prenom);
 

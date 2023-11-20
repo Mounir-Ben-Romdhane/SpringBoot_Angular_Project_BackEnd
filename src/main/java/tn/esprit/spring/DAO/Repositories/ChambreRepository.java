@@ -33,6 +33,8 @@ public interface ChambreRepository extends JpaRepository<Chambre, Long> {
     @Query("select c from Chambre c where c.numeroChambre=:num")
     List<Chambre> selectByNum2(@Param(value = "num") long num);
 
-    @Query(value = "select * from chambre where numeroChambre=?1 ",nativeQuery = true)
+    @Query(value = "select * from chambre where numeroChambre=?1 ", nativeQuery = true)
     List<Chambre> selectByNumSQL(long num);
+
 }
+
