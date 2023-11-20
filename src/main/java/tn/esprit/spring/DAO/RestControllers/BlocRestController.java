@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("bloc")
 public class BlocRestController {
-
+//test
     @Autowired
     IBlocService iBlocService;
 
