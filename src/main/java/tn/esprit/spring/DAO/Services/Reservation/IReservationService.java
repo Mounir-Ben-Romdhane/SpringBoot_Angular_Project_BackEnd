@@ -1,6 +1,7 @@
 package tn.esprit.spring.DAO.Services.Reservation;
 
 import tn.esprit.spring.DAO.Entities.Foyer;
+import tn.esprit.spring.DAO.Entities.PaymentMethods;
 import tn.esprit.spring.DAO.Entities.Reservation;
 
 import java.util.List;
@@ -14,6 +15,16 @@ public interface IReservationService {
     Reservation findById(String id);
     void deleteById(String id);
     void delete(Reservation r);
-    Reservation ajouterReservationEtAssignerAChambreEtAEtudiant(Long numChambre, Long cin) ;
+
+    Reservation ajouterReservationEtAssignerAChambreEtAEtudiant (long numChambre, long cin) ;
+
+    void acceptReservation(String idReservation);
+    void refuseReservation(String idReservation);
+
+  //  Reservation addReservationWithPayment(Reservation reservation, PaymentMethods paymentMethod);
+
+
+
+
 }
 

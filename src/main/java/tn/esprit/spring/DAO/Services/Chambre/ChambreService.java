@@ -7,6 +7,7 @@ import tn.esprit.spring.DAO.Entities.Chambre;
 import tn.esprit.spring.DAO.Repositories.ChambreRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ChambreService implements IChambreService {
@@ -55,4 +56,14 @@ public class ChambreService implements IChambreService {
     public void delete(Chambre c) {
         chambreRepository.delete(c);
     }
+
+    @Override
+    public List<Long> findAllRoomNumbers() {
+        // Retrieve all Chambre entities and map them to their numeroChambre
+        return chambreRepository.findAll().stream()
+                .map(Chambre::getNumeroChambre)
+                .distinct() // only unique
+                .collect(Collectors.toList());
+    }
+
 }
