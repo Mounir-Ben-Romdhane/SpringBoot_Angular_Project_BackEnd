@@ -25,7 +25,7 @@ public class Chambre {
     @Column(name = "typeChambre")
     private TypeChambre typeChambre;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     Bloc bloc;
 

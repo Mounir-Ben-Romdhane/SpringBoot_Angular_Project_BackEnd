@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,9 +28,8 @@ public class Foyer {
     @JsonIgnore
     private Universite universite;
 
-    @OneToMany(mappedBy = "foyer")
+    @OneToMany( mappedBy = "foyer")
     @JsonIgnore
-    private Set<Bloc> blocs = new HashSet<>();
-
+    private List<Bloc> blocs;
 
 }

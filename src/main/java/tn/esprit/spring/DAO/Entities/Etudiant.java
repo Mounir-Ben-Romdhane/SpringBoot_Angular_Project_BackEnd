@@ -1,6 +1,5 @@
 package tn.esprit.spring.DAO.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +7,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.Set;
 import java.util.*;
 
 @Entity
@@ -36,6 +37,8 @@ public class Etudiant implements UserDetails {
     @Column(name = "dateNaissance")
     private Date dateNaissance; //JJ/MM/YYYY
 
+    @ManyToMany(mappedBy = "etudiants", cascade = CascadeType.ALL)
+    private Set<Reservation> reservations;
     @Column(name = "email")
     private String email;
 

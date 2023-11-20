@@ -18,6 +18,8 @@ import java.util.List;
 @RequestMapping("chambre")
 @CrossOrigin(origins = "http://localhost:4200")
 public class ChambreRestController {
+
+    //test-fares
     @Autowired
     IChambreService iChambreService;
 

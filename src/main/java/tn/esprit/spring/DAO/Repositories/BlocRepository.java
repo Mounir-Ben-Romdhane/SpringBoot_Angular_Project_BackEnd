@@ -1,7 +1,9 @@
 package tn.esprit.spring.DAO.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import tn.esprit.spring.DAO.Entities.Bloc;
+import tn.esprit.spring.DAO.Entities.Chambre;
 import tn.esprit.spring.DAO.Entities.Foyer;
 import tn.esprit.spring.DAO.Entities.Universite;
 
@@ -27,4 +29,6 @@ public interface BlocRepository extends JpaRepository<Bloc, Long> {
     List<Bloc> findByFoyer(Foyer foyer);
 
     List<Bloc> findByFoyerUniversite(Universite universite);
+
+    Bloc getBlocByNomBloc(String numBloc);
 }
