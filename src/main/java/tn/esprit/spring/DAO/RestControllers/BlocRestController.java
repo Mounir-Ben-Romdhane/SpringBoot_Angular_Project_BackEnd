@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("bloc")
 @RequiredArgsConstructor
 public class BlocRestController {
-
+//test emna hello word
     @Autowired
     IBlocService iBlocService;
 
