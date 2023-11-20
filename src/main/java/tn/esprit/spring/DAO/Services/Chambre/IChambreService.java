@@ -14,5 +14,9 @@ public interface IChambreService {
     Chambre findById(long id);
     void deleteById(long id);
     void delete(Chambre b);
+
+    List<Long> findAllRoomNumbers();
+
+
 }
 

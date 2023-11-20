@@ -59,4 +59,10 @@ public class EtudiantService implements IEtudiantService{
     public void delete(Etudiant e) {
         etudiantRepository.delete(e);
     }
+
+    public List<Long> findAllCINs(){
+        return etudiantRepository.findAllCINs();
+    }
+
+
 }

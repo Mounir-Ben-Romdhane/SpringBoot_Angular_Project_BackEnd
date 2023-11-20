@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import tn.esprit.spring.DAO.Entities.Reservation;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, String> {
@@ -16,5 +17,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, String
     List<Reservation> findByEtudiantsIdEtudiant(long idEtudiant);
 
     // 3- Recherche des réservations par année et validité
-    List<Reservation> findByAnneeUniversitaireAndEstValide(LocalDate anneeUniversitaire, boolean estValide);
+    List<Reservation> findByAnneeUniversitaireAndEstValide(Date anneeUniversitaire, boolean estValide);
 }

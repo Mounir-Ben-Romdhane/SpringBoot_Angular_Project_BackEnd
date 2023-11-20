@@ -25,6 +25,7 @@ public interface ChambreRepository extends JpaRepository<Chambre, Long> {
     // 5- Recherche des chambres par numéro de chambre et type de chambre
     List<Chambre> findByNumeroChambreAndTypeChambre(long numeroChambre, TypeChambre typeChambre);
 
+
     //Recherche par numero de chambre
     @Query("select c from Chambre c where c.numeroChambre=?1")
     List<Chambre> selectByNum(Long num);
