@@ -9,7 +9,11 @@ import java.util.List;
 
 public interface FoyerRepository extends JpaRepository<Foyer, Long> {
 
+
     List<Foyer> findByNomFoyerContainingIgnoreCase(String nomFoyer);
+
+    Foyer findByNomFoyer(String nomFoyer);
+
     // 1- Recherche des foyers d'un bloc spécifique
     //List<Foyer> findByBlocs(Bloc bloc);
 

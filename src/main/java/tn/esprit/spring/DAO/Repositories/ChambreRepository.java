@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ChambreRepository extends JpaRepository<Chambre, Long> {
     // 1- Recherche par numéro de chambre
-    List<Chambre> findByNumeroChambre(long numeroChambre);
+    Chambre findByNumeroChambre(long numeroChambre);
 
     // 2- Recherche par type de chambre
     List<Chambre> findByTypeChambre(TypeChambre typeChambre);

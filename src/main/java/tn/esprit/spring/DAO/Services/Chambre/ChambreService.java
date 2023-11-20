@@ -10,7 +10,6 @@ import java.util.List;
 
 @Service
 public class ChambreService implements IChambreService {
-
     @Autowired
     private ChambreRepository chambreRepository;
 
