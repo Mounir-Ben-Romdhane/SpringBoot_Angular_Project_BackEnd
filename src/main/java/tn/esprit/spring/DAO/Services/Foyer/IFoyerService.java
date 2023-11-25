@@ -13,5 +13,7 @@ public interface IFoyerService {
     Foyer findById(long id);
     void deleteById(long id);
     void delete(Foyer f);
+
+    Long countChambresByFoyerId(Long id);
 }
 

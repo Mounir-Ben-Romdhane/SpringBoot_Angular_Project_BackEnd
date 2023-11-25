@@ -64,7 +64,7 @@ public class UniversiteService implements IUniversiteService{
         Foyer foyer = foyerRepository.findById(idFoyer).get();
         Universite universite = universiteRepository.findByNomUniversite(nomUniversite);
 
-        universite.setFoyer(foyer);
+       universite.setFoyer(foyer);
         universiteRepository.save(universite);
 
         return universite;

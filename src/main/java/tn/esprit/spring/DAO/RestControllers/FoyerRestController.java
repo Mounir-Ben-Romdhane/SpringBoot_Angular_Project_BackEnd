@@ -2,6 +2,7 @@ package tn.esprit.spring.DAO.RestControllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +19,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("foyer")
-@CrossOrigin(origins = "http://localhost:4200")
 public class FoyerRestController {
 
     @Autowired
@@ -47,6 +47,7 @@ public class FoyerRestController {
         iFoyerService.deleteById(id);
     }
 
+
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     Foyer findById(@PathVariable("id") Long id){
@@ -60,7 +61,11 @@ public class FoyerRestController {
         List<Foyer> foyers = foyerService.searchFoyersByNomFoyer(nomFoyer);
         return ResponseEntity.ok(foyers);
     }
-}
+
+    @GetMapping("/{id}/countChambres")
+    public Long countChambresByFoyerId(@PathVariable Long id) {
+        return foyerService.countChambresByFoyerId(id);
+    }
+
 
 }
-

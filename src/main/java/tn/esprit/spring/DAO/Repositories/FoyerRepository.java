@@ -1,6 +1,7 @@
 package tn.esprit.spring.DAO.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import tn.esprit.spring.DAO.Entities.Bloc;
 import tn.esprit.spring.DAO.Entities.Foyer;
 import tn.esprit.spring.DAO.Entities.Universite;
@@ -13,6 +14,12 @@ public interface FoyerRepository extends JpaRepository<Foyer, Long> {
     List<Foyer> findByNomFoyerContainingIgnoreCase(String nomFoyer);
 
     Foyer findByNomFoyer(String nomFoyer);
+
+//    @Query("SELECT AVG(r.nbReservations) FROM Foyer f JOIN f.reservations r WHERE f.idFoyer = :idFoyer")
+//    Double moyenneReservationsParFoyer(Long idFoyer);
+//
+    @Query("SELECT COUNT(c) FROM Chambre c WHERE c.bloc.foyer = :idFoyer")
+    Long countChambresByFoyerId(Long idFoyer);
 
     // 1- Recherche des foyers d'un bloc spécifique
     //List<Foyer> findByBlocs(Bloc bloc);

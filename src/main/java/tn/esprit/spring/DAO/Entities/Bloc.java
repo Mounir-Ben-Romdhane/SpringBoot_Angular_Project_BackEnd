@@ -27,6 +27,10 @@ public class Bloc {
     @ManyToOne
     Foyer foyer;
 
+    public Set<Chambre> getChambres() {
+        return chambres;
+    }
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bloc")
     private Set<Chambre> chambres = new HashSet<>();
 }
