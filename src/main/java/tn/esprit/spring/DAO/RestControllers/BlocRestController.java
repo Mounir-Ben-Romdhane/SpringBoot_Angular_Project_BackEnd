@@ -56,6 +56,11 @@ public class BlocRestController {
         return iBlocService.findById(id);
     }
 
+    @GetMapping("findByNomBlocContaining")
+    Bloc findByNomBlocContaining(@RequestParam String name){
+        return (Bloc) blocRepository.findByNomBlocContaining(name);
+    }
+
     @GetMapping("findByNameBloc")
     Bloc findByNomBloc(@RequestParam String name){
         return blocRepository.findByNomBloc(name);

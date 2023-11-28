@@ -1,5 +1,6 @@
 package tn.esprit.spring.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Universite {
     private String adresse;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private Foyer foyer;
 
 }

@@ -1,5 +1,6 @@
 package tn.esprit.spring.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,8 +38,7 @@ public class Etudiant implements UserDetails {
     @Column(name = "dateNaissance")
     private Date dateNaissance; //JJ/MM/YYYY
 
-    @ManyToMany(mappedBy = "etudiants", cascade = CascadeType.ALL)
-    private Set<Reservation> reservations;
+
     @Column(name = "email")
     private String email;
 
@@ -62,10 +62,9 @@ public class Etudiant implements UserDetails {
     @JsonIgnore
     private Set<Reservation> reservations = new HashSet<>();
 
+
     @OneToMany(mappedBy = "etudiant")
     private List<Token> tokens ;
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

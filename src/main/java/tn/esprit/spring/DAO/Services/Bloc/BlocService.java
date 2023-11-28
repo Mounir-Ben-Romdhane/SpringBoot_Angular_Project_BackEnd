@@ -31,6 +31,8 @@ public class BlocService implements IBlocService{
     @Override
     public Bloc addBloc(Bloc b) {
         Set<Chambre> chambres = b.getChambres();
+        Foyer idFoyer = b.getFoyer();
+        b.setFoyer(idFoyer);
         b = blocRepository.save(b);
         for (Chambre c : chambres){
             c.setBloc(b);
@@ -38,13 +40,16 @@ public class BlocService implements IBlocService{
         }
         return b;
     }
-
+/*
+    @Override
+    public Bloc addBloc(Bloc b){
+    return blocRepository.save(b);
+    }*/
     @Override
     public List<Bloc> addBlocs(List<Bloc> blocs) {
 
         return blocRepository.saveAll(blocs);
     }
-
 
     @Override
     public Bloc editBloc(Long id, Bloc b) {
@@ -111,5 +116,8 @@ public class BlocService implements IBlocService{
         foyerRepository.save(foyer);
         return bloc;
     }
-
+    @Override
+    public List<Bloc> findByNomBlocContaining(String nomBloc) {
+        return blocRepository.findByNomBlocContaining(nomBloc);
+    }
 }

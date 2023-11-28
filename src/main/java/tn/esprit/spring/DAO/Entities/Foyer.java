@@ -1,6 +1,7 @@
 package tn.esprit.spring.DAO.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,11 +26,10 @@ public class Foyer {
     private long capaciteFoyer;
 
     @OneToOne(mappedBy = "foyer")
-    @JsonIgnore
     private Universite universite;
 
     @OneToMany( mappedBy = "foyer")
-    @JsonIgnore
+    @JsonManagedReference
     private List<Bloc> blocs;
 
 }

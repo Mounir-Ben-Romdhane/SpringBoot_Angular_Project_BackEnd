@@ -15,6 +15,7 @@ public interface IBlocService {
     void delete(Bloc b);
     Bloc affecterChambresABloc(List<Long> numChambre, String nomBloc) ;
     Bloc affecterBlocAFoyer( String nomBloc, String nomFoyer) ;
+    List<Bloc> findByNomBlocContaining(String nomBloc);
 
 
 }
