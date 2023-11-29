@@ -3,8 +3,8 @@ package tn.esprit.spring.DAO.Entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.Email;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -15,16 +15,30 @@ import java.util.Set;
 @Setter
 @Getter
 @Table(name = "reservation")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Reservation {
 
     @Id
     private String idReservation;
 
     @Column(name = "anneeUniversitaire")
-    private LocalDate anneeUniversitaire; //JJ/MM/YYYY
+    private Date anneeUniversitaire; //JJ/MM/YYYY
 
     @Column(name = "estValide", nullable = true)
     private Boolean estValide;
+
+
+
+    // New status set default to en_cours
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ReservationStatus status = ReservationStatus.EN_COURS;
+
+  /*  //payment method :
+    @Enumerated(EnumType.STRING)
+    @Column(name = "paymentMethod")
+    private PaymentMethods paymentMethod;*/
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JsonIgnore

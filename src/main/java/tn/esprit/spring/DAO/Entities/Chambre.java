@@ -27,11 +27,13 @@ public class Chambre {
     @Column(name = "typeChambre")
     private TypeChambre typeChambre;
 
+
     @Column(name = "statut")
     private String statut;
 
     @Column(name = "dateDebut")
     private LocalDate dateDebut;
+
 
     @Column(name = "dateFin")
     private LocalDate dateFin;

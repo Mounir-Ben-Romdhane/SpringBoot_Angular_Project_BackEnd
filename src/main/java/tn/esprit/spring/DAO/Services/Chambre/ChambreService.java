@@ -12,7 +12,11 @@ import tn.esprit.spring.DAO.Repositories.ReservationRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+
 import java.util.Optional;
+
+import java.util.stream.Collectors;
+
 
 @Service
 public class ChambreService implements IChambreService {
@@ -97,6 +101,7 @@ public class ChambreService implements IChambreService {
     public void delete(Chambre c) {
         chambreRepository.delete(c);
     }
+
     // ChambreRestController.java
 
     @Override
@@ -143,6 +148,15 @@ public class ChambreService implements IChambreService {
         // Implement logic to retrieve a chambre by its ID
         Optional<Chambre> optionalChambre = chambreRepository.findById(idChambre);
         return optionalChambre.orElse(null);
+
+
+    @Override
+    public List<Long> findAllRoomNumbers() {
+        // Retrieve all Chambre entities and map them to their numeroChambre
+        return chambreRepository.findAll().stream()
+                .map(Chambre::getNumeroChambre)
+                .distinct() // only unique
+                .collect(Collectors.toList());
     }
 
 }
