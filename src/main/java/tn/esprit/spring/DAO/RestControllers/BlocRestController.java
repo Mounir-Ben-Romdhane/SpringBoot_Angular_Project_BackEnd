@@ -17,7 +17,9 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("bloc")
+
 @RequiredArgsConstructor
+
 public class BlocRestController {
 
 

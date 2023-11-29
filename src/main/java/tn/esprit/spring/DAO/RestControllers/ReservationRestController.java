@@ -25,7 +25,10 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("reservation")
+
+
 @CrossOrigin("*")
+
 public class ReservationRestController {
     @Autowired
     IReservationService iReservationService;

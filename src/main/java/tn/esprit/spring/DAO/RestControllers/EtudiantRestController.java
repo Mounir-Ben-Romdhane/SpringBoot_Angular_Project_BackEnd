@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +17,19 @@ import tn.esprit.spring.DAO.Dto.VerificationRequest;
 import tn.esprit.spring.DAO.Entities.Etudiant;
 import tn.esprit.spring.DAO.Services.Etudiant.IEtudiantService;
 
+
+import java.time.LocalDate;
+
 import java.io.IOException;
+
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("etudiant")
+@CrossOrigin(origins = "http://localhost:4200")
+
+
 @RequiredArgsConstructor
 public class EtudiantRestController {
     @Autowired
@@ -90,4 +99,5 @@ public class EtudiantRestController {
     Etudiant findById(@PathVariable("id") int id){
         return iEtudiantService.findById(id);
     }
+
 }

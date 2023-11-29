@@ -38,6 +38,18 @@ public class ReservationService implements IReservationService{
 
     @Override
     public Reservation editReservation(String id, Reservation r) {
+
+        if(reservationRepository.findById(id).isPresent()){
+            Reservation toUpdateReservation = reservationRepository.findById(id).get();
+            //toUpdateReservation.setIdReservation(r.getIdReservation());
+            toUpdateReservation.setAnneeUniversitaire(r.getAnneeUniversitaire());
+        //    toUpdateReservation.setEstValide(r.isEstValide());
+            toUpdateReservation.setEtudiants(r.getEtudiants());
+
+            return reservationRepository.save(toUpdateReservation);
+        }
+        return null;
+
         return reservationRepository.findById(id)
                 .map(existingReservation -> {
                     existingReservation.setAnneeUniversitaire(r.getAnneeUniversitaire());
@@ -48,6 +60,7 @@ public class ReservationService implements IReservationService{
                     return reservationRepository.save(existingReservation);
                 })
                 .orElse(null);
+
     }
 
     @Override

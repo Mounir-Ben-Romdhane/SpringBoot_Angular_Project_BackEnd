@@ -1,5 +1,6 @@
 package tn.esprit.spring.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -21,12 +22,11 @@ public class Reservation {
     @Id
     private String idReservation;
 
-
     @Column(name = "anneeUniversitaire")
     private Date anneeUniversitaire; //JJ/MM/YYYY
 
-    @Column(name = "estValide")
-    private boolean estValide;
+    @Column(name = "estValide", nullable = true)
+    private Boolean estValide;
 
 
 
@@ -43,6 +43,22 @@ public class Reservation {
     @ManyToMany(cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Etudiant> etudiants = new HashSet<>();
+    @Column(name = "dateDebut")
+    private LocalDate dateDebut;
 
+
+    @Column(name = "dateFin")
+    private LocalDate dateFin;
+
+    // Autres méthodes
+
+    public boolean couvreDate(LocalDate date) {
+        return estValide && !(date.isBefore(dateDebut) || date.isAfter(dateFin));
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "chambre_idChambre", referencedColumnName = "idChambre")
+    @JsonBackReference
+    private Chambre chambre;
 
 }

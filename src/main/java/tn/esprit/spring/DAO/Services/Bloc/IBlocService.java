@@ -16,5 +16,11 @@ public interface IBlocService {
     Bloc affecterChambresABloc(List<Long> numChambre, String nomBloc) ;
     Bloc affecterBlocAFoyer( String nomBloc, String nomFoyer) ;
 
+     Bloc findById(Long idBloc) ;
+
+    }
+
+
 
 }
+
