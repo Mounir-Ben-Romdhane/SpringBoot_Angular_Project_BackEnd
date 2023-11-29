@@ -39,7 +39,7 @@ public class ReservationService implements IReservationService{
             Reservation toUpdateReservation = reservationRepository.findById(id).get();
             //toUpdateReservation.setIdReservation(r.getIdReservation());
             toUpdateReservation.setAnneeUniversitaire(r.getAnneeUniversitaire());
-            toUpdateReservation.setEstValide(r.isEstValide());
+        //    toUpdateReservation.setEstValide(r.isEstValide());
             toUpdateReservation.setEtudiants(r.getEtudiants());
 
             return reservationRepository.save(toUpdateReservation);

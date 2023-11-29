@@ -105,13 +105,13 @@ public class BlocService implements IBlocService{
         Foyer foyer = foyerRepository.findByNomFoyer(nomFoyer);
         //Set foyer to bloc
         bloc.setFoyer(foyer);
-        //Set bloc to foyer
-        Set<Bloc> blocs = foyer.getBlocs();
-        blocs.add(bloc);
-        foyer.setBlocs(blocs);
         //save to base
         blocRepository.save(bloc);
         foyerRepository.save(foyer);
         return bloc;
+    }
+
+    public Bloc findById(Long idBloc) {
+        return blocRepository.findById(idBloc).orElse(null);
     }
 }

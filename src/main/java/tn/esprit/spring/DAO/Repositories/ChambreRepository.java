@@ -1,13 +1,16 @@
 package tn.esprit.spring.DAO.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tn.esprit.spring.DAO.Entities.Bloc;
 import tn.esprit.spring.DAO.Entities.Chambre;
 import tn.esprit.spring.DAO.Entities.TypeChambre;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface ChambreRepository extends JpaRepository<Chambre, Long> {
     // 1- Recherche par numéro de chambre
@@ -34,4 +37,10 @@ public interface ChambreRepository extends JpaRepository<Chambre, Long> {
 
     @Query(value = "select * from chambre where numeroChambre=?1 ",nativeQuery = true)
     List<Chambre> selectByNumSQL(long num);
+    List<Chambre> findByStatut(String statut);
+     @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Chambre c JOIN c.reservations r WHERE c.idChambre = :chambreId")
+    boolean existsByNumeroChambre(Long numeroChambre);
+
+    boolean existsByIdChambreNotAndNumeroChambre(Long idChambre, Long numeroChambre);
+
 }

@@ -2,17 +2,22 @@ package tn.esprit.spring.DAO.RestControllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.DAO.Entities.Chambre;
 import tn.esprit.spring.DAO.Entities.Etudiant;
 import tn.esprit.spring.DAO.Services.Chambre.IChambreService;
 import tn.esprit.spring.DAO.Services.Etudiant.IEtudiantService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("etudiant")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class EtudiantRestController {
     @Autowired
     IEtudiantService iEtudiantService;
@@ -41,4 +46,5 @@ public class EtudiantRestController {
     Etudiant findById(@PathVariable("id") Long id){
         return iEtudiantService.findById(id);
     }
+
 }
