@@ -26,7 +26,7 @@ public class Bloc {
     @Column(name = "capaciteBloc")
     private long capaciteBloc;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL )
     Foyer foyer;
 
     @OneToMany(mappedBy = "bloc", cascade = CascadeType.ALL)
@@ -72,4 +72,5 @@ public class Bloc {
     public void setChambres(Set<Chambre> chambres) {
         this.chambres = chambres;
     }
+
 }

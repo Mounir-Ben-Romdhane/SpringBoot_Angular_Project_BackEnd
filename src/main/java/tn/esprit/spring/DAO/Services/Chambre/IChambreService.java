@@ -29,5 +29,10 @@ public interface IChambreService {
     // Get chambre by ID
     Chambre getChambreById(Long idChambre);
 
+
+    List<Long> findAllRoomNumbers();
+
+
+
 }
 

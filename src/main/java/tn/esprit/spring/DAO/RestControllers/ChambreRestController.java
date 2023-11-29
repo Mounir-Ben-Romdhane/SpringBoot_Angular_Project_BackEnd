@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.DAO.Entities.Bloc;
 import tn.esprit.spring.DAO.Entities.Chambre;
@@ -25,6 +28,8 @@ import java.util.Optional;
 @RequestMapping("chambre")
 @CrossOrigin(origins = "http://localhost:4200")
 public class ChambreRestController {
+
+    //test-fares
     @Autowired
     IChambreService iChambreService;
 
@@ -46,6 +51,16 @@ public class ChambreRestController {
 
         Chambre nouvelleChambre = iChambreService.addChambre(chambre);
         return new ResponseEntity<>(nouvelleChambre, HttpStatus.CREATED);
+
+    @PreAuthorize("hasRole('ADMIN')")
+    Chambre addChambre(@RequestBody Chambre b) {
+        return iChambreService.addChambre(b);
+    }
+
+    @PutMapping("update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    Chambre updateChambre(@PathVariable("id") Long id, @RequestBody Chambre b){
+        return iChambreService.editChambre(id, b);
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateChambre(@PathVariable("id") Long idChambre, @RequestBody Chambre updatedChambre) {
@@ -64,6 +79,11 @@ public class ChambreRestController {
 
         Chambre modifiedChambre = iChambreService.editChambre(idChambre, updatedChambre);
         return new ResponseEntity<>(modifiedChambre, HttpStatus.OK);
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    void deleteChambre(@PathVariable("id") Long id){
+        iChambreService.deleteById(id);
     }
 
 
