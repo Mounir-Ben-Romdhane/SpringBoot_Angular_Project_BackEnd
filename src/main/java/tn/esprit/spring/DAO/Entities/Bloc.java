@@ -28,7 +28,6 @@ public class Bloc {
 
     @ManyToOne(cascade = CascadeType.ALL )
     Foyer foyer;
-
     @OneToMany(mappedBy = "bloc", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Chambre> chambres = new HashSet<>();

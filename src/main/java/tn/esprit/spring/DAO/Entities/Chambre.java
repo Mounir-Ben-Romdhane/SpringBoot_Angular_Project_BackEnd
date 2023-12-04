@@ -42,6 +42,7 @@ public class Chambre {
     @JoinColumn(name = "bloc_id_bloc", referencedColumnName = "idBloc")
     @JsonBackReference
     private Bloc bloc;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "chambre")
     @JsonIgnore
     private Set<Reservation> reservations = new HashSet<>();

@@ -23,44 +23,15 @@ public class ReservationService implements IReservationService{
     @Autowired
     private EtudiantRepository etudiantRepository;
 
+
     @Override
     public Reservation addReservation(Reservation r) {
-        r.setStatus(ReservationStatus.EN_COURS);
-        return reservationRepository.save(r);
-    }
-
-    @Override
-    public List<Reservation> addReservations(List<Reservation> reservations) {
-        reservations.forEach(r -> r.setStatus(ReservationStatus.EN_COURS)); // Set default status for each
-        return reservationRepository.saveAll(reservations);
-
+        return null;
     }
 
     @Override
     public Reservation editReservation(String id, Reservation r) {
-
-        if(reservationRepository.findById(id).isPresent()){
-            Reservation toUpdateReservation = reservationRepository.findById(id).get();
-            //toUpdateReservation.setIdReservation(r.getIdReservation());
-            toUpdateReservation.setAnneeUniversitaire(r.getAnneeUniversitaire());
-        //    toUpdateReservation.setEstValide(r.isEstValide());
-            toUpdateReservation.setEtudiants(r.getEtudiants());
-
-            return reservationRepository.save(toUpdateReservation);
-        }
         return null;
-
-        return reservationRepository.findById(id)
-                .map(existingReservation -> {
-                    existingReservation.setAnneeUniversitaire(r.getAnneeUniversitaire());
-                    existingReservation.setEstValide(r.isEstValide());
-                    existingReservation.setEtudiants(r.getEtudiants());
-                    // Assuming status is being passed in the updated reservation
-                    existingReservation.setStatus(r.getStatus());
-                    return reservationRepository.save(existingReservation);
-                })
-                .orElse(null);
-
     }
 
     @Override
@@ -83,86 +54,20 @@ public class ReservationService implements IReservationService{
         reservationRepository.delete(e);
     }
 
-
-
-   @Override
+    @Override
     public Reservation ajouterReservationEtAssignerAChambreEtAEtudiant(long numChambre, long cin) {
-        int  i;
-        int numReservation;
-        Etudiant e = etudiantRepository.findByCin(cin);
-        System.out.println(e.getNomEt());
-        Chambre c = new Chambre() ;
-        boolean test = false ;
-        //---------------------------------
-        LocalDate dateDebutAU;
-        LocalDate dateFinAU;
-        int year = LocalDate.now().getYear() % 100;
-        if (LocalDate.now().getMonthValue() <= 7) {
-            dateDebutAU = LocalDate.of(Integer.parseInt("20" + (year - 1)), 9, 15);
-            dateFinAU = LocalDate.of(Integer.parseInt("20" + year), 6, 30);
-        } else {
-            dateDebutAU = LocalDate.of(Integer.parseInt("20" + year), 9, 15);
-            dateFinAU = LocalDate.of(Integer.parseInt("20" + (year + 1)), 6, 30);
-        }
-        //---------------------------------
-        if(e != null){
-            c = chambreRepository.findByNumeroChambre(numChambre);
-
-            Set<Reservation> reservations = c.getReservations() ;
-            i = (int) reservations.stream().filter(Reservation::isEstValide).count();
-            if(c.getTypeChambre().equals(TypeChambre.SIMPLE)&&i==0){
-                test = true ;
-            }else if (c.getTypeChambre().equals(TypeChambre.DOUBLE) && i<=1){
-                test = true ;
-            }else if (c.getTypeChambre().equals(TypeChambre.TRIPLE) && i<=2){
-                test = true ;
-            }
-
-        }
-        if(!test){
-            return new Reservation();
-        }else{
-            System.out.println("creation Reservation");
-            Reservation r = new Reservation();
-            r.setIdReservation(dateDebutAU.getYear()+"-"+dateFinAU.getYear()+"-"+c.getBloc().getNomBloc()
-                    +"-"+c.getNumeroChambre()+"-"+e.getCin());
-            r.setAnneeUniversitaire(new Date());
-            r.setEstValide(true);
-
-            //chamber hwa il parent
-            c.getReservations().add(r);
-            chambreRepository.save(c);
-            // reservation heya il parent w etudiant how child
-            r.getEtudiants().add(e);
-
-            return reservationRepository.save(r);
-        }
+        return null;
     }
-
 
     @Override
     public void acceptReservation(String idReservation) {
-        Reservation reservation = findReservationById(idReservation);
-        if (reservation != null) {
-            reservation.setStatus(ReservationStatus.ACTIVE);
-            saveReservation(reservation);
-        }
+
     }
 
     @Override
     public void refuseReservation(String idReservation) {
-        Reservation reservation = findReservationById(idReservation);
-        if (reservation != null) {
-            reservation.setStatus(ReservationStatus.REFUSED);
-            saveReservation(reservation);
-        }
-    }
 
-  /*  @Override
-    public Reservation addReservationWithPayment(Reservation reservation, PaymentMethods paymentMethod) {
-        reservation.setPaymentMethod(paymentMethod);
-        return reservationRepository.save(reservation);
-    }*/
+    }
 
 
     private Reservation findReservationById(String idReservation) {

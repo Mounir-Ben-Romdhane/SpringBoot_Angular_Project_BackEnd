@@ -31,9 +31,9 @@ public class Reservation {
 
 
     // New status set default to en_cours
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private ReservationStatus status = ReservationStatus.EN_COURS;
+  //  @Enumerated(EnumType.STRING)
+//    @Column(name = "status")
+  //  private ReservationStatus status = ReservationStatus.EN_COURS;
 
   /*  //payment method :
     @Enumerated(EnumType.STRING)

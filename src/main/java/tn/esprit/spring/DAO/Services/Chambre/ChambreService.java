@@ -29,22 +29,23 @@ public class ChambreService implements IChambreService {
         this.blocRepository = blocRepository;
     }
 
-
+    public List<Chambre> searchChambresByBlocName(String nomBloc) {
+        return chambreRepository.findByBloc_NomBloc(nomBloc);
+    }
     @Override
     public Chambre addChambre(Chambre c) {
-        Bloc idBloc = c.getBloc();
-
-        // Check if the Bloc is not null
-        if (idBloc != null) {
-            // Check if the Bloc is transient (not yet saved)
-            if (idBloc.getIdBloc() == 0) {
-                // Save the Bloc to the database
-                blocRepository.save(idBloc);
-            }
+        // Ensure that the associated Bloc is saved
+        Bloc bloc = c.getBloc();
+        if (bloc != null && bloc.getIdBloc() == 0) {
+            // Bloc is transient, save it first
+        //    bloc = blocRepository.save(bloc);
+            c.setBloc(bloc);
         }
 
+        // Save the Chambre
         return chambreRepository.save(c);
     }
+
 
 
     @Override
@@ -149,14 +150,13 @@ public class ChambreService implements IChambreService {
         Optional<Chambre> optionalChambre = chambreRepository.findById(idChambre);
         return optionalChambre.orElse(null);
 
-
-    @Override
-    public List<Long> findAllRoomNumbers() {
-        // Retrieve all Chambre entities and map them to their numeroChambre
-        return chambreRepository.findAll().stream()
-                .map(Chambre::getNumeroChambre)
-                .distinct() // only unique
-                .collect(Collectors.toList());
     }
-
-}
+        @Override
+        public List<Long> findAllRoomNumbers() {
+            // Retrieve all Chambre entities and map them to their numeroChambre
+            return chambreRepository.findAll().stream()
+                    .map(Chambre::getNumeroChambre)
+                    .distinct() // only unique
+                    .collect(Collectors.toList());
+        }
+    }
