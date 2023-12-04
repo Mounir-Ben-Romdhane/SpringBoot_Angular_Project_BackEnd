@@ -18,6 +18,7 @@ public interface ChambreRepository extends JpaRepository<Chambre, Long> {
 
     // 2- Recherche par type de chambre
     List<Chambre> findByTypeChambre(TypeChambre typeChambre);
+    List<Chambre> findByBloc_NomBloc(String nomBloc);
 
     // 3- Recherche des chambres par bloc
     List<Chambre> findByBloc(Bloc bloc);
@@ -42,7 +43,7 @@ public interface ChambreRepository extends JpaRepository<Chambre, Long> {
 
     List<Chambre> findByStatut(String statut);
      @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Chambre c JOIN c.reservations r WHERE c.idChambre = :chambreId")
-    boolean existsByNumeroChambre(Long numeroChambre);
+     boolean existsByNumeroChambre(@Param("chambreId") Long numeroChambre);
 
     boolean existsByIdChambreNotAndNumeroChambre(Long idChambre, Long numeroChambre);
 

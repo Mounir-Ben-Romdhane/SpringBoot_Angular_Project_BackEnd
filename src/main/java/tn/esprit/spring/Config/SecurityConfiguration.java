@@ -71,7 +71,7 @@ public class SecurityConfiguration {
                         .requestMatchers(DELETE, "/reservation/**").hasAnyAuthority(ADMIN_DELETE.name(), USER_DELETE.name())*/
 
                         .anyRequest()
-                        .authenticated()
+                        .permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

@@ -1,6 +1,5 @@
 package tn.esprit.spring.DAO.RestControllers;
 
-import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,13 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.DAO.Entities.Chambre;
-import tn.esprit.spring.DAO.Entities.Etudiant;
-import tn.esprit.spring.DAO.Entities.PaymentMethods;
 import tn.esprit.spring.DAO.Entities.Reservation;
 import tn.esprit.spring.DAO.Services.Chambre.ChambreService;
 import tn.esprit.spring.DAO.Services.Etudiant.EtudiantService;
-import tn.esprit.spring.DAO.Services.Etudiant.IEtudiantService;
 import tn.esprit.spring.DAO.Services.Reservation.IReservationService;
 import tn.esprit.spring.DAO.Services.Reservation.ReservationService;
 
