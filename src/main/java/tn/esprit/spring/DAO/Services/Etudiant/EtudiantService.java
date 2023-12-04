@@ -8,11 +8,14 @@ import tn.esprit.spring.DAO.Repositories.ChambreRepository;
 import tn.esprit.spring.DAO.Repositories.EtudiantRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EtudiantService implements IEtudiantService{
     @Autowired
     private EtudiantRepository etudiantRepository;
+
+
 
     @Override
     public Etudiant addEtudiant(Etudiant e) {
@@ -60,8 +63,18 @@ public class EtudiantService implements IEtudiantService{
         etudiantRepository.delete(e);
     }
 
+
+
+
     public List<Long> findAllCINs(){
         return etudiantRepository.findAllCINs();
+    }
+
+    @Override
+    public List<Long> findUnreservedCinUsers() {
+        return etudiantRepository.findUnreservedCins().stream()
+                .distinct() // Ensure they are unique
+                .collect(Collectors.toList());
     }
 
 

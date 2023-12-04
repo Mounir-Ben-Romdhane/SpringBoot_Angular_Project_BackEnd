@@ -35,4 +35,8 @@ public interface ChambreRepository extends JpaRepository<Chambre, Long> {
 
     @Query(value = "select * from chambre where numeroChambre=?1 ",nativeQuery = true)
     List<Chambre> selectByNumSQL(long num);
+
+    @Query("SELECT c FROM Chambre c LEFT JOIN c.reservations r WHERE r IS NULL OR r.status <> 'ACTIVE'")
+    List<Chambre> findUnreservedRooms();
+
 }

@@ -13,6 +13,7 @@ import java.time.Year;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService implements IReservationService{
@@ -33,7 +34,6 @@ public class ReservationService implements IReservationService{
     public List<Reservation> addReservations(List<Reservation> reservations) {
         reservations.forEach(r -> r.setStatus(ReservationStatus.EN_COURS)); // Set default status for each
         return reservationRepository.saveAll(reservations);
-
     }
 
     @Override
@@ -151,6 +151,8 @@ public class ReservationService implements IReservationService{
         return reservationRepository.countReservationsBetween(start, end);
     }
 
+
+
   /*  @Override
     public Reservation addReservationWithPayment(Reservation reservation, PaymentMethods paymentMethod) {
         reservation.setPaymentMethod(paymentMethod);
@@ -165,6 +167,7 @@ public class ReservationService implements IReservationService{
     private Reservation saveReservation(Reservation reservation) {
         return reservationRepository.save(reservation);
     }
+
 
 
 

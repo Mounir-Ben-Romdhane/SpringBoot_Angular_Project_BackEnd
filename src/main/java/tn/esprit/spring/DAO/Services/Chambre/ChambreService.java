@@ -66,4 +66,19 @@ public class ChambreService implements IChambreService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Long> findUnreservedRoomNumbers() {
+        return  chambreRepository.findUnreservedRooms().stream()
+                .map(Chambre::getNumeroChambre)
+                .distinct() // Ensure they are unique
+                .collect(Collectors.toList());
+    }
+
+    public List<Long> findAllRoomIds() {
+        return chambreRepository.findAll().stream()
+                .map(Chambre::getIdChambre)
+                .distinct() // only unique
+                .collect(Collectors.toList());
+    }
+
 }

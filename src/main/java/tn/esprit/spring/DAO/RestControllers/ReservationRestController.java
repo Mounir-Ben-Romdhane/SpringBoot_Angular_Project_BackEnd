@@ -1,24 +1,18 @@
 package tn.esprit.spring.DAO.RestControllers;
 
-import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.DAO.Entities.Chambre;
-import tn.esprit.spring.DAO.Entities.Etudiant;
-import tn.esprit.spring.DAO.Entities.PaymentMethods;
 import tn.esprit.spring.DAO.Entities.Reservation;
 import tn.esprit.spring.DAO.Services.Chambre.ChambreService;
 import tn.esprit.spring.DAO.Services.Etudiant.EtudiantService;
-import tn.esprit.spring.DAO.Services.Etudiant.IEtudiantService;
 import tn.esprit.spring.DAO.Services.Reservation.IReservationService;
 import tn.esprit.spring.DAO.Services.Reservation.ReservationService;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -93,7 +87,24 @@ public class ReservationRestController {
         return new ResponseEntity<>(roomNumbers, HttpStatus.OK);
     }
 
+
+    @GetMapping("/idchambres")
+    public ResponseEntity<List<Long>> getAllRoomIds() {
+        List<Long> roomIds = chambreService.findAllRoomIds();
+        return ResponseEntity.ok(roomIds);
+    }
+
     //retreive data from service chambre to get All Cins directlly using query
+
+
+    @GetMapping("/getReservationParAnneeUniversitaire")
+    public long getReservationParAnneeUniversitaire(
+            @RequestParam("debutAnnee") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate debutAnnee,
+            @RequestParam("finAnnee") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate finAnnee) {
+
+        return reservationService.getReservationParAnneeUniversitaire(debutAnnee, finAnnee);
+    }
+
     @GetMapping("/cins")
     public ResponseEntity<List<Long>> getAllStudentCINs() {
         List<Long> cins = etudiantService.findAllCINs();
@@ -101,12 +112,17 @@ public class ReservationRestController {
     }
 
 
-    @GetMapping("/reservation/getReservationParAnneeUniversitaire")
-    public long getReservationParAnneeUniversitaire(
-            @RequestParam("debutAnnee") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate debutAnnee,
-            @RequestParam("finAnnee") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate finAnnee) {
+    @GetMapping("/unreservedchambre")
+    public ResponseEntity<List<Long>> getUnreservedRooms() {
+        List<Long> unreservedRooms = chambreService.findUnreservedRoomNumbers();
+        return new ResponseEntity<>(unreservedRooms, HttpStatus.OK);
+    }
 
-        return reservationService.getReservationParAnneeUniversitaire(debutAnnee, finAnnee);
+
+    @GetMapping("/unreservedcins")
+    public ResponseEntity<List<Long>> getUnreservedCins() {
+        List<Long> unreservedCins = etudiantService.findUnreservedCinUsers();
+        return new ResponseEntity<>(unreservedCins, HttpStatus.OK);
     }
 
 

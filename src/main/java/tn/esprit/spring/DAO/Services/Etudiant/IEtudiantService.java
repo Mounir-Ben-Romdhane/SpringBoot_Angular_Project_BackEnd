@@ -13,4 +13,6 @@ public interface IEtudiantService {
     Etudiant findById(long id);
     void deleteById(long id);
     void delete(Etudiant b);
+
+    List<Long> findUnreservedCinUsers();
 }
