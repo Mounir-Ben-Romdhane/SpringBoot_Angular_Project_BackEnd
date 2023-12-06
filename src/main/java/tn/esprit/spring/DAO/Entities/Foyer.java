@@ -1,6 +1,8 @@
 package tn.esprit.spring.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -8,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.time.LocalDateTime;
 
@@ -71,10 +74,17 @@ public class Foyer {
     private Set<Bloc> blocs = new HashSet<>();
 
 
+    
+
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "universite_id")
     @JsonIgnore
     private Universite universite;
 
+    private Set<Bloc> blocs = new HashSet<>();
+    @OneToMany( mappedBy = "foyer")
+    @JsonIgnore
+    private List<Bloc> blocs;
 
 }

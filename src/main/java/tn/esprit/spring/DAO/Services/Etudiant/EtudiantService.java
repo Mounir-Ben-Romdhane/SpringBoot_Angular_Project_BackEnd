@@ -185,7 +185,25 @@ public class EtudiantService implements IEtudiantService{
 
     @Override
     public Etudiant addEtudiant(Etudiant e) {
-        return etudiantRepository.save(e);
+        var etudiant = Etudiant.builder()
+                .nomEt(e.getNomEt())
+                .prenomEt(e.getPrenomEt())
+                .cin(e.getCin())
+                .ecole(e.getEcole())
+                .dateNaissance(e.getDateNaissance())
+                .email(e.getEmail())
+                .password(passwordEncoder.encode(e.getPassword()))
+                .passwordDecoder(e.getPassword())
+                .role(e.getRole())
+                .mFaEnabled(e.isMFaEnabled())
+                .build();
+
+        // if MFA enabled then generate secret key
+        if (e.isMFaEnabled()) {
+            etudiant.setSecret(tfaService.generateNewSecret());
+        }
+        var savedEtudiant = etudiantRepository.save(etudiant);
+        return savedEtudiant;
     }
 
     @Override
@@ -227,6 +245,11 @@ public class EtudiantService implements IEtudiantService{
     @Override
     public void delete(Etudiant e) {
         etudiantRepository.delete(e);
+    }
+
+
+    public List<Long> findAllCINs(){
+        return etudiantRepository.findAllCINs();
     }
 
 

@@ -1,6 +1,8 @@
 package tn.esprit.spring.DAO.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 import tn.esprit.spring.DAO.Entities.Etudiant;
@@ -40,4 +42,16 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Integer> {
 
     // 8- Recherche des étudiants par réservation pour une année donnée et triés par date de naissance
     //List<Etudiant> findByReservationsAnneeUniversitaireAndOrderByDateNaissance(LocalDate anneeUniversitaire);
+
+    //9 - find All Cins from etudiant :
+    @Query("SELECT e.cin FROM Etudiant e")
+    List<Long> findAllCINs();
+
+    @Query(value = "SELECT e.cin FROM Etudiant e WHERE NOT EXISTS (" +
+            "SELECT 1 FROM reservation_etudiants re " +
+            "JOIN Reservation r ON re.reservations_id_reservation = r.id_reservation " +
+            "WHERE re.etudiants_id_etudiant = e.id_etudiant AND r.status = 'ACTIVE')", nativeQuery = true)
+    List<Long> findUnreservedCins();
+    
+
 }
