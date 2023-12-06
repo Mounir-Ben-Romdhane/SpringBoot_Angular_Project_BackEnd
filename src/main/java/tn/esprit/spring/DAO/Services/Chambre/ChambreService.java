@@ -65,6 +65,8 @@ public class ChambreService implements IChambreService {
             toUpdateChambre.setNumeroChambre(c.getNumeroChambre());
             toUpdateChambre.setTypeChambre(c.getTypeChambre());
             toUpdateChambre.setBloc(c.getBloc());
+
+
             toUpdateChambre.setReservations(c.getReservations());
             return chambreRepository.save(toUpdateChambre);
         }
