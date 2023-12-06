@@ -21,6 +21,11 @@ public interface FoyerRepository extends JpaRepository<Foyer, Long> {
     @Query("SELECT COUNT(c) FROM Chambre c WHERE c.bloc.foyer = :idFoyer")
     Long countChambresByFoyerId(Long idFoyer);
 
+    List<Foyer> findByUniversiteNomUniversiteIgnoreCase(String  nomUniversite);
+
+
+
+
     // 1- Recherche des foyers d'un bloc spécifique
     //List<Foyer> findByBlocs(Bloc bloc);
 

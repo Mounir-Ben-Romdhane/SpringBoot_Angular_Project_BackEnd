@@ -71,7 +71,8 @@ public class Foyer {
     private Set<Bloc> blocs = new HashSet<>();
 
 
-    @OneToOne(mappedBy = "foyer")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "universite_id")
     @JsonIgnore
     private Universite universite;
 

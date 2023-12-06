@@ -1,5 +1,7 @@
 package tn.esprit.spring.DAO.Services.Foyer;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.DAO.Entities.Foyer;
@@ -9,6 +11,7 @@ import tn.esprit.spring.DAO.Repositories.FoyerRepository;
 import tn.esprit.spring.DAO.Repositories.ReservationRepository;
 import tn.esprit.spring.DAO.Repositories.UniversiteRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +21,8 @@ public class FoyerService implements IFoyerService{
     @Autowired
     private UniversiteRepository universiteRepository;
 
+
+
     @Autowired
     private ChambreRepository chambreRepository;
 
@@ -26,7 +31,10 @@ public class FoyerService implements IFoyerService{
 
 
     @Override
-    public Foyer addFoyer(Foyer f) {
+    public Foyer addFoyer(Foyer f, long IdUniversite) {
+        Universite u=universiteRepository.findById(IdUniversite).get();
+        f.setUniversite(u);
+
         return foyerRepository.save(f);
     }
 
@@ -48,6 +56,7 @@ public class FoyerService implements IFoyerService{
         }
         return null;
     }
+
 
     @Override
     public List<Foyer> findAll() {
@@ -73,11 +82,6 @@ public class FoyerService implements IFoyerService{
         return foyerRepository.findByNomFoyerContainingIgnoreCase(nomFoyer);
     }
 
-//    public Double moyenneReservationsParFoyer(Long idFoyer) {
-//        return foyerRepository.moyenneReservationsParFoyer(idFoyer);
-//    }
-
-
     public Long countChambresByFoyerId(Long idFoyer) {
         Foyer foyer = foyerRepository.findById(idFoyer).orElse(null);
 
@@ -89,4 +93,26 @@ public class FoyerService implements IFoyerService{
 
         return 0L; // ou retournez null selon vos besoins
     }
+
+    @Override
+    public List<Universite> findAllUniversite() {
+        List<Universite>listeU=new ArrayList<>();
+        for (Universite u:universiteRepository.findAll()){
+            if(u.getFoyer()==null)
+                listeU.add(u);
+        }
+        return listeU;
+    }
+
+    @Override
+    public List<Foyer> findByUniversiteNamee(String nomUniversite) {
+      return  foyerRepository.findByUniversiteNomUniversiteIgnoreCase(nomUniversite);    }
+
+    public Universite getUniversiteByFoyer(long idFoyer) {
+        Foyer foyer = foyerRepository.findById(idFoyer)
+                .orElseThrow(() -> new EntityNotFoundException("Chambre not found"));
+
+        return foyer.getUniversite();
+    }
+
 }
