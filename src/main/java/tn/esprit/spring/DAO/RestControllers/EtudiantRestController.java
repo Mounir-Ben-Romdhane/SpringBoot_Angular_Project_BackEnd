@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("etudiant")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EtudiantRestController {
     @Autowired
     IEtudiantService iEtudiantService;
