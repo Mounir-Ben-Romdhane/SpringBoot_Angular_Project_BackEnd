@@ -23,4 +23,5 @@ public interface UniversiteRepository extends JpaRepository<Universite, Long> {
      @Query("select u from Universite u join u.foyer f join f.blocs b join b.chambres c  group by u.idUniversite having count (c) >= :nombreMinChambres")
      List<Universite> findByNombreMinChambres(int nombreMinChambres);}
     Universite findByNomUniversite(String nomUniversite);
+    Universite findByIdUniversite(long id);
 }

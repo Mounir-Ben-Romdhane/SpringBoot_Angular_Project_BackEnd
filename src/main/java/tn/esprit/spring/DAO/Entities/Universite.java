@@ -7,6 +7,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Setter
 @Getter
@@ -24,9 +27,13 @@ public class Universite {
     private String adresse;
 
 
+    @OneToOne( mappedBy = "universite")
+    private Foyer foyer;
+
     @OneToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "foyer_id_foyer")
     @JsonIgnore
     private Foyer foyer;
+
 
 }
