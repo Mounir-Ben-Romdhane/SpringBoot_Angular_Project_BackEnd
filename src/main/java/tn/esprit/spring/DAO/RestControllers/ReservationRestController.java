@@ -21,6 +21,9 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("reservation")
 
+@CrossOrigin(origins = "http://localhost:4200")
+
+
 
 @CrossOrigin("*")
 
