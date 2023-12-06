@@ -8,6 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.Set;
 import java.util.*;
 
 @Entity
@@ -35,6 +37,7 @@ public class Etudiant implements UserDetails {
 
     @Column(name = "dateNaissance")
     private Date dateNaissance; //JJ/MM/YYYY
+
 
     @Column(name = "email")
     private String email;

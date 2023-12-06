@@ -83,19 +83,16 @@ public class BlocService implements IBlocService{
         blocRepository.delete(b);
     }
 
+    //A consomé
     @Override
     public Bloc affecterChambresABloc(List<Long> numChambre, String nomBloc) {
         Bloc bloc = blocRepository.findByNomBloc(nomBloc);
-        Set<Chambre> chambres = new HashSet<>();
-        for (long numC : numChambre){
-            Chambre c = chambreRepository.findByNumeroChambre(numC);
-            chambres.add(c);
+        numChambre.forEach(numero ->{
+            Chambre c =chambreRepository.findByNumeroChambre(numero);
             c.setBloc(bloc);
             chambreRepository.save(c);
-        }
-        bloc.setChambres(chambres);
-        blocRepository.save(bloc);
-        return bloc;
+        });
+    return bloc;
     }
 
     @Override
@@ -105,13 +102,21 @@ public class BlocService implements IBlocService{
         Foyer foyer = foyerRepository.findByNomFoyer(nomFoyer);
         //Set foyer to bloc
         bloc.setFoyer(foyer);
+
         //Set bloc to foyer
-        Set<Bloc> blocs = foyer.getBlocs();
+        List<Bloc> blocs = foyer.getBlocs();
         blocs.add(bloc);
         foyer.setBlocs(blocs);
+
         //save to base
         blocRepository.save(bloc);
         foyerRepository.save(foyer);
         return bloc;
     }
+
+
+    public Bloc findById(Long idBloc) {
+        return blocRepository.findById(idBloc).orElse(null);
+    }
+
 }
