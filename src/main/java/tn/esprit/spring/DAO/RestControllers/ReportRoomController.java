@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("reported")
-@CrossOrigin("*")
 public class ReportRoomController {
 
     @Autowired
