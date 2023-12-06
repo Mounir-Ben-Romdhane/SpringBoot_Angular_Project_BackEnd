@@ -3,6 +3,8 @@ package tn.esprit.spring.DAO.Services.Reservation;
 import tn.esprit.spring.DAO.Entities.Foyer;
 import tn.esprit.spring.DAO.Entities.Reservation;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface IReservationService {
@@ -20,6 +22,10 @@ public interface IReservationService {
     void refuseReservation(String idReservation);
 
   //  Reservation addReservationWithPayment(Reservation reservation, PaymentMethods paymentMethod);
+
+    long getReservationParAnneeUniversitaire(LocalDate debutAnnee, LocalDate finAnnee);
+
+
 
 
 

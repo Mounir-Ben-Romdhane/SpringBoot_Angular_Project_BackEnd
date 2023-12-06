@@ -46,4 +46,12 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Integer> {
     //9 - find All Cins from etudiant :
     @Query("SELECT e.cin FROM Etudiant e")
     List<Long> findAllCINs();
+
+    @Query(value = "SELECT e.cin FROM Etudiant e WHERE NOT EXISTS (" +
+            "SELECT 1 FROM reservation_etudiants re " +
+            "JOIN Reservation r ON re.reservations_id_reservation = r.id_reservation " +
+            "WHERE re.etudiants_id_etudiant = e.id_etudiant AND r.status = 'ACTIVE')", nativeQuery = true)
+    List<Long> findUnreservedCins();
+    
+
 }

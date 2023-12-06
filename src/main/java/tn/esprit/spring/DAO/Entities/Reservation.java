@@ -29,6 +29,9 @@ public class Reservation {
     private Boolean estValide;
 
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Etudiant> etudiants = new HashSet<>();
 
     // New status set default to en_cours
   //  @Enumerated(EnumType.STRING)
@@ -39,6 +42,7 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     @Column(name = "paymentMethod")
     private PaymentMethods paymentMethod;*/
+
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JsonIgnore
@@ -60,5 +64,6 @@ public class Reservation {
     @JoinColumn(name = "chambre_idChambre", referencedColumnName = "idChambre")
     @JsonBackReference
     private Chambre chambre;
+
 
 }
