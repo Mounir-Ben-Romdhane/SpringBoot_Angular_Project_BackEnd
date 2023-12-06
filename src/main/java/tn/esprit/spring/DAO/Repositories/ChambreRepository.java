@@ -38,8 +38,12 @@ public interface ChambreRepository extends JpaRepository<Chambre, Long> {
     @Query("select c from Chambre c where c.numeroChambre=:num")
     List<Chambre> selectByNum2(@Param(value = "num") long num);
 
-    @Query(value = "select * from chambre where numeroChambre=?1 ", nativeQuery = true)
+    @Query(value = "select * from chambre where numeroChambre=?1 ",nativeQuery = true)
     List<Chambre> selectByNumSQL(long num);
+
+
+    @Query("SELECT c FROM Chambre c LEFT JOIN c.reservations r WHERE r IS NULL OR r.status <> 'ACTIVE'")
+    List<Chambre> findUnreservedRooms();
 
     List<Chambre> findByStatut(String statut);
      @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Chambre c JOIN c.reservations r WHERE c.idChambre = :chambreId")
@@ -50,3 +54,5 @@ public interface ChambreRepository extends JpaRepository<Chambre, Long> {
 
 }
 
+
+}

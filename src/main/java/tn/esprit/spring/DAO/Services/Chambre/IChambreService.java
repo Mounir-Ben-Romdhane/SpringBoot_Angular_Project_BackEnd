@@ -33,6 +33,7 @@ public interface IChambreService {
     List<Long> findAllRoomNumbers();
 
 
+    List<Long> findUnreservedRoomNumbers();
 
 }
 

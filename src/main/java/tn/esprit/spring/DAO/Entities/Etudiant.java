@@ -63,6 +63,7 @@ public class Etudiant implements UserDetails {
     private Set<Reservation> reservations = new HashSet<>();
 
     @OneToMany(mappedBy = "etudiant")
+    @JsonIgnore
     private List<Token> tokens ;
 
 
