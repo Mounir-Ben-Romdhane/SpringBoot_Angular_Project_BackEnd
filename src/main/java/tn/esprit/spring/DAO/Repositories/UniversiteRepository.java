@@ -22,3 +22,5 @@ public interface UniversiteRepository extends JpaRepository<Universite, Long> {
      // récupère les universités qui ont un nombre de chambres supérieur ou égal à la valeur spécifiée (nombreMinChambres
      @Query("select u from Universite u join u.foyer f join f.blocs b join b.chambres c  group by u.idUniversite having count (c) >= :nombreMinChambres")
      List<Universite> findByNombreMinChambres(int nombreMinChambres);}
+    Universite findByNomUniversite(String nomUniversite);
+}

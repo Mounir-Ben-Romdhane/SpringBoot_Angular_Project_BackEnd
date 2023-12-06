@@ -16,6 +16,8 @@ import java.util.Set;
 public class UniversiteService implements IUniversiteService{
     @Autowired
     private UniversiteRepository universiteRepository;
+    @Autowired
+    private FoyerRepository foyerRepository;
 
 
     @Override
@@ -92,4 +94,21 @@ public class UniversiteService implements IUniversiteService{
     }
 
 
+    public Universite affecterFoyerAUniversite(long idFoyer, String nomUniversite) {
+        Foyer foyer = foyerRepository.findById(idFoyer).get();
+        Universite universite = universiteRepository.findByNomUniversite(nomUniversite);
+
+        universite.setFoyer(foyer);
+        universiteRepository.save(universite);
+
+        return universite;
+    }
+
+    @Override
+    public Universite desaffecterFoyerAUniversite(long idUniversite) {
+        Universite universite = universiteRepository.findById(idUniversite).get();
+        universite.setFoyer(null);
+        universiteRepository.save(universite);
+        return universite;
+    }
 }

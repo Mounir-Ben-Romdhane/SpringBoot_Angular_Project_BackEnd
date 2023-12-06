@@ -26,4 +26,8 @@ public interface IUniversiteService {
 
 
 
+    Universite affecterFoyerAUniversite(long idFoyer, String nomUniversite);
+    Universite desaffecterFoyerAUniversite (long idUniversite) ;
+ 
+
 }

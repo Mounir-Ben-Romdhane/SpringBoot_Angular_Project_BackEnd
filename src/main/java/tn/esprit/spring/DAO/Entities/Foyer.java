@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,5 +38,8 @@ public class Foyer {
     @OneToMany(mappedBy = "foyer")
     @JsonIgnore
     private Set<Bloc> blocs = new HashSet<>();
+    @OneToMany( mappedBy = "foyer")
+    @JsonIgnore
+    private List<Bloc> blocs;
 
 }
